@@ -3,6 +3,8 @@
 <html>
 	<head>
 		<script src="https://d3js.org/d3.v4.js"></script>
+        <script src="dataLoader.js"></script>
+        <script src="getNode.js"></script>
 		
 		<style>
       		@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
@@ -69,7 +71,7 @@
 	</head>
 	<body>
 		<div>
-			Lab 02 treemap
+			Lab 02 treemap 臺北市公廁點位資訊
 		</div>
 		<ul>
 			<li>遠距教學授課防疫演練: 2021.03.18 (四) </li>
@@ -77,213 +79,237 @@
 			<li><a href="https://www.d3-graph-gallery.com/graph/treemap_custom.html">Treemap customization in d3.js</a></li>
 			<li><a href="http://blog.infographics.tw/2015/10/d3js-tutorial-treemap-and-budget/">D3.js 實戰 － 利用 Treemap Layout 將政府預算視覺化</a></li>
 		</ul>
-
-		<div id="dropfile" for="csvfile">
-			CSV 資料扔過來! Drop your CSV here.
+		<div id="treemap">
+			<svg width="1700" height ="800">
+				<g>
+					//士林
+					<text x="0" y="45" font-size="2rem" fill="black">士林</text>
+					<rect x="0" y="50" width="458" height="160" style="stroke: red; fill: rgb(26, 188, 156); opacity: 0.689261;"></rect>
+					<text x="1" y="70" font-size="1rem" fill="white">貼心公廁</text>
+					<text x="1" y="90" font-size=".9rem" fill="white">732</text>
+					<rect x="463" y="50" width="46.5" height="115" style="stroke: red; fill: rgb(26, 188, 156); opacity: 0.59375;"></rect>
+					<text x="463" y="70" font-size="1rem" fill="white">無障礙廁所</text>
+					<text x="463" y="90" font-size=".9rem" fill="white">51</text>
+					<rect x="463" y="170" width="46.5" height="40" style="stroke: red; fill: rgb(26, 188, 156); opacity: 0.544014;"></rect>
+					<text x="463" y="190" font-size="1rem" fill="white">親子廁所</text>
+					<text x="463" y="210" font-size=".9rem" fill="white">18</text>
+					//大同
+					<text x="0" y="215" font-size="2rem" fill="black">大同</text>
+					<rect x="0" y="220" width="420" height="160" style="stroke: red; fill: rgb(46, 204, 113); opacity: 0.8125;"></rect>
+					<text x="1" y="240" font-size="1rem" fill="white">貼心公廁</text>
+					<text x="1" y="260" font-size=".9rem" fill="white">364</text>
+					<rect x="425" y="220" width="85" height="115" style="stroke: red; fill: rgb(46, 204, 113); opacity: 0.8125;"></rect>
+					<text x="425" y="240" font-size="1rem" fill="white">無障礙廁所</text>
+					<text x="425" y="260" font-size=".9rem" fill="white">52</text>
+					<rect x="425" y="340" width="85" height="40" style="stroke: red; fill: rgb(46, 204, 113); opacity: 0.8125;"></rect>
+					<text x="425" y="360" font-size="1rem" fill="white">親子廁所</text>
+					<text x="425" y="380" font-size=".9rem" fill="white">16</text>
+					//大安
+					<text x="0" y="385" font-size="2rem" fill="black">大安</text>
+					<rect x="0" y="390" width="462" height="160" style="stroke: red; fill: rgb(80, 157, 223); opacity: 0.8125;"></rect>
+					<text x="1" y="410" font-size="1rem" fill="white">貼心公廁</text>
+					<text x="1" y="430" font-size=".9rem" fill="white">555</text>
+					<rect x="467" y="390" width="43" height="115" style="stroke: red; fill: rgb(80, 157, 223); opacity: 0.8125;"></rect>
+					<text x="467" y="410" font-size="1rem" fill="white">無障礙廁所</text>
+					<text x="467" y="430" font-size=".9rem" fill="white">36</text>
+					<rect x="467" y="510" width="43" height="40" style="stroke: red; fill: rgb(80, 157, 223); opacity: 0.8125;"></rect>
+					<text x="467" y="530" font-size="1rem" fill="white">親子廁所</text>
+					<text x="467" y="550" font-size=".9rem" fill="white">12</text>
+					//中山
+					<text x="0" y="555" font-size="2rem" fill="black">中山</text>
+					<rect x="0" y="560" width="476.4286" height="160" style="stroke: red; fill: rgb(143, 109, 237); opacity: 0.8125;"></rect>
+					<text x="1" y="580" font-size="1rem" fill="white">貼心公廁</text>
+					<text x="1" y="600" font-size=".9rem" fill="white">538</text>
+					<rect x="481.4286" y="560" width="28.6" height="75" style="stroke: red; fill: rgb(143, 109, 237); opacity: 0.8125;"></rect>
+					<text x="481.4286" y="580" font-size="1rem" fill="white">無障礙廁所</text>
+					<text x="481.4286" y="600" font-size=".9rem" fill="white">17</text>
+					<rect x="481.4286" y="640" width="28.6" height="80" style="stroke: red; fill: rgb(143, 109, 237); opacity: 0.8125;"></rect>
+					<text x="481.4286" y="660" font-size="1rem" fill="white">親子廁所</text>
+					<text x="481.4286" y="680" font-size=".9rem" fill="white">13</text>
+					//中正
+					<text x="520" y="45" font-size="2rem" fill="black">中正</text>
+					<rect x="520" y="50" width="450.35" height="160" style="stroke: red; fill: rgb(229, 207, 69); opacity: 0.689261;"></rect>
+					<text x="521" y="70" font-size="1rem" fill="white">貼心公廁</text>
+					<text x="521" y="90" font-size=".9rem" fill="white">1128</text>
+					<rect x="976.35" y="50" width="54.65" height="115" style="stroke: red; fill: rgb(229, 207, 69); opacity: 0.59375;"></rect>
+					<text x="976.35" y="70" font-size="1rem" fill="white">無障礙廁所</text>
+					<text x="976.35" y="90" font-size=".9rem" fill="white">94</text>
+					<rect x="976.35" y="170" width="54.65" height="40" style="stroke: red; fill: rgb(229, 207, 69); opacity: 0.544014;"></rect>
+					<text x="976.35" y="190" font-size="1rem" fill="white">親子廁所</text>
+					<text x="976.35" y="210" font-size=".9rem" fill="white">33</text>
+					//內湖
+					<text x="520" y="215" font-size="2rem" fill="black">內湖</text>
+					<rect x="520" y="220" width="415" height="160" style="stroke: red; fill: rgb(249, 163, 69); opacity: 0.689261;"></rect>
+					<text x="521" y="240" font-size="1rem" fill="white">貼心公廁</text>
+					<text x="521" y="260" font-size=".9rem" fill="white">479</text>
+					<rect x="941" y="220" width="90" height="123" style="stroke: red; fill: rgb(249, 163, 69); opacity: 0.59375;"></rect>
+					<text x="941" y="240" font-size="1rem" fill="white">無障礙廁所</text>
+					<text x="941" y="260" font-size=".9rem" fill="white">79</text>
+					<rect x="941" y="348" width="90" height="32" style="stroke: red; fill: rgb(249, 163, 69); opacity: 0.544014;"></rect>
+					<text x="941" y="368" font-size="1rem" fill="white">親子廁所</text>
+					<text x="941" y="368" font-size=".9rem" fill="white">19</text>
+					//文山
+					<text x="520" y="385" font-size="2rem" fill="black">文山</text>
+					<rect x="520" y="390" width="458" height="160" style="stroke: red; fill: rgb(249, 163, 175); opacity: 0.689261;"></rect>
+					<text x="521" y="410" font-size="1rem" fill="white">貼心公廁</text>
+					<text x="521" y="430" font-size=".9rem" fill="white">556</text>
+					<rect x="984" y="390" width="48" height="115" style="stroke: red; fill: rgb(249, 163, 175); opacity: 0.59375;"></rect>
+					<text x="984" y="410" font-size="1rem" fill="white">無障礙廁所</text>
+					<text x="984" y="430" font-size=".9rem" fill="white">41</text>
+					<rect x="984" y="510" width="48" height="40" style="stroke: red; fill: rgb(249, 163, 175); opacity: 0.544014;"></rect>
+					<text x="984" y="530" font-size="1rem" fill="white">親子廁所</text>
+					<text x="984" y="550" font-size=".9rem" fill="white">13</text>
+					//北投
+					<text x="520" y="555" font-size="2rem" fill="black">北投</text>
+					<rect x="520" y="560" width="423" height="160" style="stroke: red; fill: rgb(250, 92, 88); opacity: 0.689261;"></rect>
+					<text x="521" y="580" font-size="1rem" fill="white">貼心公廁</text>
+					<text x="521" y="600" font-size=".9rem" fill="white">474</text>
+					<rect x="949" y="560" width="82" height="102" style="stroke: red; fill: rgb(250, 92, 88); opacity: 0.59375;"></rect>
+					<text x="949" y="580" font-size="1rem" fill="white">無障礙廁所</text>
+					<text x="949" y="600" font-size=".9rem" fill="white">55</text>
+					<rect x="949" y="667" width="82" height="53" style="stroke: red; fill: rgb(250, 92, 88); opacity: 0.544014;"></rect>
+					<text x="949" y="687" font-size="1rem" fill="white">親子廁所</text>
+					<text x="949" y="707" font-size=".9rem" fill="white">28</text>
+					//松山
+					<text x="1040" y="45" font-size="2rem" fill="black">松山</text>
+					<rect x="1040" y="50" width="420" height="160" style="stroke: red; fill: rgb(39, 92, 88); opacity: 0.689261;"></rect>
+					<text x="1041" y="70" font-size="1rem" fill="white">貼心公廁</text>
+					<text x="1041" y="90" font-size=".9rem" fill="white">635</text>
+					<rect x="1466" y="50" width="85" height="102" style="stroke: red; fill: rgb(39, 92, 88); opacity: 0.59375;"></rect>
+					<text x="1466" y="70" font-size="1rem" fill="white">無障礙廁所</text>
+					<text x="1466" y="90" font-size=".9rem" fill="white">80</text>
+					<rect x="1466" y="157" width="85" height="53" style="stroke: red; fill: rgb(39, 92, 88); opacity: 0.544014;"></rect>
+					<text x="1466" y="177" font-size="1rem" fill="white">親子廁所</text>
+					<text x="1466" y="197" font-size=".9rem" fill="white">38</text>
+					//信義
+					<text x="1040" y="215" font-size="2rem" fill="black">信義</text>
+					<rect x="1040" y="220" width="415" height="160" style="stroke: red; fill: rgb(104, 46, 88); opacity: 0.8125;"></rect>
+					<text x="1040" y="260" font-size=".9rem" fill="white">1001</text>
+					<text x="1041" y="240" font-size="1rem" fill="white">貼心公廁</text>
+					<rect x="1460" y="220" width="90" height="115" style="stroke: red; fill:rgb(104, 46, 88); opacity: 0.8125;"></rect>
+					<text x="1460" y="240" font-size="1rem" fill="white">無障礙廁所</text>
+					<text x="1460" y="260" font-size=".9rem" fill="white">181</text>
+					<rect x="1460" y="340" width="90" height="40" style="stroke: red; fill: rgb(104, 46, 88); opacity: 0.8125;"></rect>
+					<text x="1460" y="360" font-size="1rem" fill="white">親子廁所</text>
+					<text x="1460" y="380" font-size=".9rem" fill="white">60</text>
+					//南港
+					<text x="1040" y="385" font-size="2rem" fill="black">南港</text>
+					<rect x="1040" y="390" width="386" height="160" style="stroke: red; fill:rgb(17, 17, 134); opacity: 0.8125;"></rect>
+					<text x="1041" y="430" font-size=".9rem" fill="white">321</text>
+					<text x="1041" y="410" font-size="1rem" fill="white">貼心公廁</text>
+					<rect x="1431" y="390" width="121" height="150" style="stroke: red; fill: rgb(17, 17, 134); opacity: 0.8125;"></rect>
+					<text x="1431" y="410" font-size="1rem" fill="white">無障礙廁所</text>
+					<text x="1431" y="430" font-size=".9rem" fill="white">90</text>
+					<rect x="1431" y="545" width="121" height="5" style="stroke: red; fill: rgb(17, 17, 134); opacity: 0.8125;"></rect>
+					<text x="1431" y="545" font-size="1rem" fill="white">親子廁所</text>
+					<text x="1431" y="545" font-size=".9rem" fill="white">3</text>
+					//萬華
+					<text x="1040" y="555" font-size="2rem" fill="black">萬華</text>
+					<rect x="1040" y="560" width="411" height="160" style="stroke: red; fill: rgb(62, 62, 66); opacity: 0.8125;"></rect>
+					<text x="1041" y="580" font-size="1rem" fill="white">貼心公廁</text>
+					<text x="1041" y="600" font-size=".9rem" fill="white">458</text>
+					<rect x="1456" y="560" width="94" height="135" style="stroke: red; fill:rgb(62, 62, 66); opacity: 0.8125;"></rect>
+					<text x="1456" y="580" font-size="1rem" fill="white">無障礙廁所</text>
+					<text x="1456" y="580" font-size=".9rem" fill="white">85</text>
+					<rect x="1456" y="700" width="94" height="20" style="stroke: red; fill: rgb(62, 62, 66); opacity: 0.8125;"></rect>
+					<text x="1456" y="720" font-size="1rem" fill="white">親子廁所</text>
+					<text x="1456" y="720" font-size=".9rem" fill="white">12</text>
+				</g>
+			</svg>
 		</div>
-		
-		<div id="treemap"></div>
-		
-		
 		<script>
-			//產生SVG
-			function mkSVG(container, bosses, data){
-				const treemap = document.createElement('div')
-				
-				const margin = {top: 10, right: 10, bottom: 10, left: 10};
-				const height = container.clientHeight - margin.top - margin.bottom;
-				const width = container.clientWidth - margin.left - margin.right;
-				
-				const svg = d3.select(treemap)
-							  .append('svg')
-							  .attr('width', width + margin.left + margin.right)
-							  .attr('height', height + margin.top + margin.bottom)
-							  .append('g')
-							
-				//利用d3.hierarchy產生x y的資料
-				const d3ds = d3.hierarchy(data).sum(({value}) => value)
-				
-				
-				//設定svg位置
-				d3.treemap()
-				  .size([width, height])
-				  .paddingTop(45)
-				  .paddingRight(15)
-				  .paddingInner(10) 
-				  (d3ds)
-				  
-				  
-				//設定指導教授顏色
-				const color = d3.scaleOrdinal()
-								.domain(bosses)
-								.range([ "#402D54", "#D18975", "#8FD175", "#ff66ff", "#ffb366", "#80ff80", "#d279a6", "#ff6633", "#6600ff", "#00bfff", "#53c653", "#ff8000"])
-								
-				//設定透明度，分數越低越透明
-				const opacity = d3.scaleLinear()
-								.domain([100, 50])
-								.range([1,.1])
-								
-				//化長方形
-				svg
-					.selectAll('rectangle')
-					.data(d3ds.leaves())
-					.enter()
-					.append('rect')
-					 .attr('x', ({x0}) => x0)
-					 .attr('y', ({y0}) => y0)
-					 .attr('width', ({x0,x1}) => x1-x0)
-					 .attr('height', ({y0,y1}) => y1-y0)
-					 .style('stroke', 'red')
-					 .style('fill', ({parent}) => color(parent.data.name))
-					 .style('opacity', (d) => opacity(d.data.value))
-					 
-				
-				//寫學生姓名
-				svg
-					.selectAll('studentNames')
-					.data(d3ds.leaves())
-					.enter()
-					.append('text')
-					 .attr('x', ({x0}) => x0 + 1)
-					 .attr('y', ({y0}) => y0 + 20)
-					 .text(({data}) => data.name)
-					 .attr('font-size', '1rem')
-					 .attr('fill', 'white')
-				
-				//寫學生分數
-				svg
-					.selectAll('studentScore')
-					.data(d3ds.leaves())
-					.enter()
-					.append('text')
-					 .attr('x', ({x0}) => x0 + 1)
-					 .attr('y', ({y0}) => y0 + 35)
-					 .text(({data}) => data.value < 60 ? '' : data.value)
-					 .attr('font-size', '.9rem')
-					 .attr('fill', 'white')
-					 
-				svg
-					.selectAll('studentSecond')
-					.data(d3ds.leaves())
-					.enter()
-					.append('text')
-					 .attr('x', ({x0}) => x0 + 1)
-					 .attr('y', ({y0}) => y0 + 50)
-					 .text(({data}) => parseFloat(data.seconds) > 30 ? '不及格' : '(' + data.seconds + '秒)')
-					 .attr('font-size', '.9rem')
-					 .attr('fill', 'white')
-					 
-				svg
-					.selectAll('labertory')
-					.data(d3ds.descendants().filter(function(d){return d.depth==1}))
-					.enter()
-					.append('text')
-					 .attr('x', ({x0}) => x0 + 1)
-					 .attr('y', ({y0}) => y0 + 21)
-					 .text(({data}) => data.name)
-					 .attr('font-size', '1.1rem')
-					 .attr('fill', 'black')
-					 
-				return treemap
-			}	
+			var Base64 = { _keyStr: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=", encode: function (r) { var t, e, o, a, h, c, n = "", d = 0; for (r = Base64._utf8_encode(r); d < r.length;)o = (c = r.charCodeAt(d++)) >> 2, a = (3 & c) << 4 | (t = r.charCodeAt(d++)) >> 4, h = (15 & t) << 2 | (e = r.charCodeAt(d++)) >> 6, c = 63 & e, isNaN(t) ? h = c = 64 : isNaN(e) && (c = 64), n = n + this._keyStr.charAt(o) + this._keyStr.charAt(a) + this._keyStr.charAt(h) + this._keyStr.charAt(c); return n }, decode: function (r) { var t, e, o, a, h, c = "", n = 0; for (r = r.replace(/[^A-Za-z0-9\+\/\=]/g, ""); n < r.length;)t = this._keyStr.indexOf(r.charAt(n++)) << 2 | (o = this._keyStr.indexOf(r.charAt(n++))) >> 4, e = (15 & o) << 4 | (a = this._keyStr.indexOf(r.charAt(n++))) >> 2, o = (3 & a) << 6 | (h = this._keyStr.indexOf(r.charAt(n++))), c += String.fromCharCode(t), 64 != a && (c += String.fromCharCode(e)), 64 != h && (c += String.fromCharCode(o)); return c = Base64._utf8_decode(c) }, _utf8_encode: function (r) { r = r.replace(/\r\n/g, "\n"); for (var t = "", e = 0; e < r.length; e++) { var o = r.charCodeAt(e); o < 128 ? t += String.fromCharCode(o) : (127 < o && o < 2048 ? t += String.fromCharCode(o >> 6 | 192) : (t += String.fromCharCode(o >> 12 | 224), t += String.fromCharCode(o >> 6 & 63 | 128)), t += String.fromCharCode(63 & o | 128)) } return t }, _utf8_decode: function (r) { for (var t = "", e = 0, o = c1 = c2 = 0; e < r.length;)(o = r.charCodeAt(e)) < 128 ? (t += String.fromCharCode(o), e++) : 191 < o && o < 224 ? (c2 = r.charCodeAt(e + 1), t += String.fromCharCode((31 & o) << 6 | 63 & c2), e += 2) : (c2 = r.charCodeAt(e + 1), c3 = r.charCodeAt(e + 2), t += String.fromCharCode((15 & o) << 12 | (63 & c2) << 6 | 63 & c3), e += 3); return t } };
 		</script>
-		
-		<script>
-			window.addEventListener('load', () => {
-				const treemapContainer = document.getElementById('treemap')
-				
-				document.getElementById('dropfile').addEventListener('dragover', (evt) => {
-					evt.preventDefault()
-				})
-				
-				document.getElementById('dropfile').addEventListener('drop', (evt) => {
-					evt.preventDefault()
-					
-					const { files } = evt.dataTransfer
-					
-					if(files.length){
-						if(treemapContainer.innerHTML.length){
-							treemapContainer.innerHTML = ''
-						}
-					
-						const csvFile = files[0]
-						
-						//讀取csv
-						const fr = new FileReader()
-						
-						fr.onload = () => {
-							const allBoss = []
-							const studentArr = fr.result.split('\n').map(e => e.split(','))
-							
-							const d3Json = {
-								children: [],
-								name: 'vis2021s'
-							}
-							
-							//先由小到大排列，算出名次、級距、再算出分數
-							const mapping = new Array(41).fill(-1)
-							const scoreSort = studentArr.sort((x,y) => {
-								let a = isNaN(parseFloat(x[3])) ? 40 : parseFloat(x[3])
-								let b = isNaN(parseFloat(y[3])) ? 40 : parseFloat(y[3])
-								
-								return a-b
-							}).map(e => isNaN(parseFloat(e[3])) ? 40 : parseFloat(e[3]))
-							
-							const scoreSet = [...new Set([...scoreSort.filter(e => e<=30)])]
-							const step = (100 - 60) / scoreSet.length
-							
-							for(let i of scoreSort){
-								const idx = scoreSet.indexOf(i)
-								let score
-								if(idx == -1){
-									score = 50
-								}
-								else{
-									score = (100 - step * idx).toFixed(2)
-								}
-								mapping[i] = score
-							}
-							
-							
-							
-							
-							for(let i of studentArr){
-								const bossName = i[2].length ? i[2] : (i[1] == '碩' ? '未知' : '資工四')
-								
-								
-								if(allBoss.indexOf(bossName) == -1){
-									allBoss.push(bossName)
-									d3Json.children.push({
-										name: bossName,
-										children: []
-									})
-								}
-								
-								const seconds = isNaN(parseInt(i[3])) ? 40 : parseInt(i[3])
-								
-								d3Json.children.find(e => e.name == bossName).children.push({
-									name: i[0],
-									seconds,
-									value: parseFloat(mapping[seconds])
-								})
-								
 
-								
-							}
-							treemapContainer.appendChild(mkSVG(treemapContainer, allBoss, d3Json))
-							
+		<script>
+			var csvData = null
+			window.addEventListener('load', function(){
+                var treemapContainer = document.getElementById('treemap')
+                var objectKeys = document.getElementById("ObjectKeys")
+
+
+               // window.onload=function(){
+                	document.getElementById("ObjectKeys").addEventListener('change', function(evt){
+					if(evt.target.value == 'selectValue' ){
+						return;
+					}
+				
+                    //clear container
+                    if (treemapContainer.innerHTML.length) {
+                        treemapContainer.innerHTML = ''
+                    }
+
+
+                    dataClassifier(objectKeys.value, function(data, layers){
+                        node = getNode(data, layers, treemapContainer)
+                        treemapContainer.appendChild(node)
+                    })
+				})
+              //}
+
+				/*d3.csv("./data.csv", function(error, vCsvData) {
+					if (error) throw error;
+					csvData=vCsvData;
+					//console.log(csvData)
+					var parsedCSV = d3.csvFormat(csvData);
+					console.log(parsedCSV)
+					if (treemapContainer.innerHTML.length) {
+						treemapContainer.innerHTML = ''
+					}
+					if(document.getElementById("ObjectKeys")!=null){
+						if (objectKeys.innerHTML.length) {
+						objectKeys.innerHTML = ''
 						}
-						
+					}
+
+					
+					dataLoader(parsedCSV, function(){
+						console.log(parsedCSV)	
+						dataClassifier(objectKeys.value, function(data, layers){
+							node = getNode(data, layers, treemapContainer)
+							treemapContainer.innerHTML = node.innerHTML
+						}) 
+					})			
+				});*/
+			//window.onload=function(){
+ 				document.getElementById('dropfile').addEventListener('dragover',function(evt){
+						evt.preventDefault()
+					})
+
+				document.getElementById('dropfile').addEventListener('drop', function(evt){
+					evt.preventDefault()
+
+					var files = evt.dataTransfer.files
+
+					if (files.length) {
+                        if (treemapContainer.innerHTML.length) {
+                            treemapContainer.innerHTML = ''
+                        }
+
+                        if (objectKeys.innerHTML.length) {
+                            objectKeys.innerHTML = ''
+						}
+
+						var csvFile = files[0]
+
+						//讀取csv
+						var fr = new FileReader()
+
+                        fr.onload = function(){
+                            dataLoader(fr.result, function(){
+								dataClassifier(objectKeys.value, function(data, layers){
+									node = getNode(data, layers, treemapContainer)
+									treemapContainer.innerHTML = node.innerHTML
+								}) 
+							})			                         
+                        }
+
 						fr.readAsText(csvFile)
 					}
-					
 				})
-
-				
-			
-			})
+			//}
+		})
 		</script>
-	
 	</body>
 	
 </html>
