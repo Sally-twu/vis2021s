@@ -1,13 +1,197 @@
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
-<head>
-    <meta charset="utf-8">
-    <title>Lab</title>
-    <script src="http://d3js.org/d3.v6.min.js" charset="utf-8"></script> <!-- v6.5.0 -->
-</head>
-<body>
-    <script type="text/javascript">
-      // Your beautiful D3 code will go here
-    </script>
-  </html>
-  
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Lab07</title>
+        <script src="https://d3js.org/d3.v6.min.js" charset="utf-8"></script>
+        <style type="text/css">
+            @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@900&display=swap');
+            h1,
+            div {
+                background-color: rgba(255, 255, 0, 0.1);
+                font-family: 'Noto Serif JP', serif;
+                font-size: 24pt;
+                border: solid 1px black;
+                width: 90%;
+                margin: 5px auto;
+                padding: 10px;
+            }
+
+            div {
+                font-size: 12pt;
+            }
+
+            body {
+                background-color: rgba(255, 128, 255, 0.1);
+            }
+
+            .name-character {
+                width: 256px;
+                height: 256px;
+                display: inline-flex;
+            }
+
+        </style>
+    </head>
+    <body>
+        <h1>
+             lab07 漢字變形 Path Transitions
+        </h1>
+        <div>
+            展示區 (姓名)
+            <hr>
+            <div id='Tu01' class='name-character'></div>
+            <div id='Tu02' class='name-character'></div>
+            <div id='Yu' class='name-character'></div>
+            <div id='Shan' class='name-character'></div>
+        </div>
+
+        <script type="text/javascript">
+            const ANIMATION_DURATION = 3000;
+            const RADIUS = 64;
+
+            window.addEventListener('load', function() {
+                loadByPathAndAnimateNameCharacter('./Tu01.svg', '#Tu01');
+                loadByPathAndAnimateNameCharacter('./Tu02.svg', '#Tu02');
+                loadByPathAndAnimateNameCharacter('./Yu.svg', '#Yu');
+                loadByPathAndAnimateNameCharacter('./Shan.svg', '#Shan');
+            });
+            //事件監聽機制 https://blog.techbridge.cc/2017/07/15/javascript-event-propagation/
+            //兩路徑轉換 參考https://gist.github.com/mbostock/3916621 
+            //路徑 https://www.w3.org/TR/SVG/paths.html#InterfaceSVGPathSeg
+
+            function loadByPathAndAnimateNameCharacter(filePath, elementId) {
+                d3.xml(filePath).then(function(data) {
+                    var nameCharacter = d3.select(elementId);
+                    nameCharacter.node()
+                        .append(data.documentElement);
+                    animate(nameCharacter);
+                });
+            }
+            function animate(nameCharacter) {
+                const characterPathD = nameCharacter.select('path')
+                    .attr('d');
+                const circlePathD = getCirclePathD(characterPathD);
+                var path = nameCharacter.select('path')
+                    .attr('d', circlePathD)
+                    .attr('fill', 'none')
+                    .attr('stroke', 'blue')
+                    .attr('stroke-width', 1);
+                repeat();
+
+                function repeat() {
+                    path.transition()
+                        .duration(ANIMATION_DURATION)
+                        .attr('d', characterPathD)
+                        .transition()
+                        .duration(ANIMATION_DURATION)
+                        .attr('d', circlePathD)
+                        .on('end', repeat);
+                }
+            }
+            //取得圓的路徑
+            function getCirclePathD(characterPathD) {
+                var strokesN;
+                var pointsNs;
+                var orders;
+                characterPathD = characterPathD.replaceAll('q', ' q ')
+                    .replaceAll('v', ' v ')
+                    .replaceAll('t', ' t ')
+                    .replaceAll('h', ' h ')
+                    .replaceAll('l', ' l ')
+                    .replaceAll('z', '')
+                    .replaceAll('/\s/g', ' ');
+                [strokesN, pointsNs, orders] = getDataToBuildCirclePathD(characterPathD);
+                var circlePathD = '';
+                for (var index = 1; index < strokesN; ++index) {
+                    circlePathD += 'M';
+                    var gap = Math.PI * 2 / pointsNs[index - 1];
+                    var angle = 0;
+                    if (index === getMostComplicatedStrokeIndex(pointsNs) + 1) {
+                        circlePathD += (RADIUS * (Math.cos(angle)) + RADIUS * 2) + ' ' +
+                            (RADIUS * (Math.sin(angle)) + RADIUS * 2) + ' ';
+                        angle += gap;
+                        for (var j = 0, order = orders[index - 1]; j < order.length; ++j) {
+                            if (order[j] === 'q') {
+                                circlePathD += ' q ';
+                                var r = RADIUS / Math.cos(gap / 2);
+                                circlePathD += (r * Math.cos(angle - gap / 2) - RADIUS * Math.cos(angle - gap)) + ' ' +
+                                    (r * Math.sin(angle - gap / 2) - RADIUS * Math.sin(angle - gap)) + ' ';
+
+                                circlePathD += (RADIUS * (Math.cos(angle) - Math.cos(angle - gap))) + ' ' +
+                                    (RADIUS * (Math.sin(angle) - Math.sin(angle - gap))) + ' ';
+                                angle += gap;
+                            } else if (order[j] === 'v') {
+                                circlePathD += ' v 0 ';
+                            } else if (order[j] === 'h') {
+                                circlePathD += ' h 0 ';
+                            } else if (order[j] === 't') {
+                                circlePathD += 't';
+                                if (order[j - 1] === 'q') {
+                                    circlePathD += (RADIUS * (Math.cos(angle) - Math.cos(angle - gap))) + ' ' +
+                                        (RADIUS * (Math.sin(angle) - Math.sin(angle - gap))) + ' ';
+                                    angle += gap;
+                                } else {
+                                    circlePathD += ' 0 0 ';
+                                }
+                            } else if (order[j] === 'l') {
+                                circlePathD += ' l 0 0 ';
+                            }
+                        }
+                    } else {
+                        circlePathD += (RADIUS * (Math.cos(0)) + RADIUS) + ' ' +
+                            (RADIUS * (Math.sin(0)) + RADIUS) + ' ';
+                        for (var j = 0, order = orders[index - 1]; j < order.length; ++j) {
+                            if (order[j] === 'q') {
+                                circlePathD += ' q 0 0 0 0 ';
+                            } else if (order[j] === 'v') {
+                                circlePathD += ' v 0 ';
+                            } else if (order[j] === 'h') {
+                                circlePathD += ' h 0 ';
+                            } else if (order[j] === 't') {
+                                circlePathD += ' t 0 0 ';
+                            } else if (order[j] === 'l') {
+                                circlePathD += ' l 0 0 ';
+                            }
+                        }
+                    }
+                    circlePathD += 'z';
+                }
+                return circlePathD;
+            }
+
+            function getMostComplicatedStrokeIndex(pointsNs) {
+                var result = 0;
+                for (var i = 0; i < pointsNs.length; ++i) {
+                    if (pointsNs[result] < pointsNs[i]) {
+                        result = i;
+                    }
+                }
+                return result;
+            }
+
+            function getDataToBuildCirclePathD(parsedCharacterPathD) {
+                var strokes = parsedCharacterPathD.split('M');
+                var pointsNs = [];
+                var orders = [];
+                for (var i = 1; i < strokes.length; ++i) {
+                    var points = strokes[i].split(' ');
+                    var order = ['dump'];
+                    var pointsN = 0;
+                    for (var j = 1; j < points.length; ++j) {
+                        if ('a' <= points[j] && points[j] <= 'z') {
+                            order.push(points[j]);
+                        }
+                        if (points[j] === 'q') {
+                            pointsN += 1;
+                        }
+                    }
+                    pointsNs.push(pointsN);
+                    orders.push(order);
+                }
+                return [strokes.length, pointsNs, orders];
+            }
+        </script>
+    </body>
+</html>
+<!--參考陳風平:架構寫得好清楚，程式碼很簡要-->
