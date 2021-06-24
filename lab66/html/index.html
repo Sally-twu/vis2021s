@@ -179,7 +179,7 @@
                     .text(Lipsum)
                 ;
 				
-				d3.select("#training-section")
+				/*d3.select("#training-section")
                     .selectAll("img")
 					.data(d3.range(1, 4))
 					.enter()
@@ -187,11 +187,11 @@
 					.attr("src", function(d){ return "media/" + d + ".png"})
                     .style('height', '350px')
                     .style('width', '350px')
-                ;
+                ;*/
 
                 d3.select("#testing-section")
                     .selectAll("img")
-					.data(d3.range(4, 7))
+					.data(d3.range(1))
 					.enter()
 					.append("img")
 					.attr("src", function(d){ return "media/" + d + ".png"})
